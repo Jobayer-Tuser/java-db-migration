@@ -1,7 +1,5 @@
 package me.jobayeralmahmud.javamigrations.controller;
 
-import me.jobayeralmahmud.javamigrations.migrations.BaseMigration;
-import me.jobayeralmahmud.javamigrations.migrations.MigrationRunner;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

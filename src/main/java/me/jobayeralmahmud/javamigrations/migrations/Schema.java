@@ -41,6 +41,7 @@ public class Schema {
 
     private void execute(String sql) throws SQLException {
         try (Statement statement = connection.createStatement()) {
+            IO.println(sql);
             statement.execute(sql);
         }
     }

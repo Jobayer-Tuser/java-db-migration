@@ -3,8 +3,6 @@ package me.jobayeralmahmud.javamigrations.autoconfig;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 
-import me.jobayeralmahmud.javamigrations.migrations.BaseMigration;
-import me.jobayeralmahmud.javamigrations.migrations.MigrationInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,6 +1,7 @@
 package me.jobayeralmahmud.javamigrations.migrations;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.util.List;
  * It grabs all {@link BaseMigration} beans and runs them against the
  * DataSource.
  */
+@Component
 public class MigrationInitializer implements InitializingBean {
 
     private final DataSource dataSource;

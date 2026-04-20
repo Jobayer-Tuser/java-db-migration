@@ -2,8 +2,6 @@ package me.jobayeralmahmud.javamigrations;
 
 import org.junit.jupiter.api.Test;
 
-import me.jobayeralmahmud.javamigrations.migrations.Blueprint;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

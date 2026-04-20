@@ -5,7 +5,8 @@ import java.sql.SQLException;
 public abstract class BaseMigration {
 
     /**
-     * Automatically extracts the version from the class name example(s1_create_users_table).
+     * Automatically extracts the version from the class name
+     * example(s1_create_users_table).
      */
     public String migrationTablesName() {
         return convertClassNameToSnakeCase(this.getClass().getSimpleName());
@@ -23,7 +24,9 @@ public abstract class BaseMigration {
     /**
      * Rollback migration logic (drop tables, remove data, etc.).
      */
-    public abstract void down(Schema schema) throws SQLException;
+    public void down(Schema schema) throws SQLException {
+        // Default implementation: do nothing. Override if needed.{
+    }
 
     /**
      * Helper to easily output logs.
