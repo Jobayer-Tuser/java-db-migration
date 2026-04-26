@@ -1,4 +1,4 @@
-# Flyway Migration DSL
+# Spring Boot Database Migration
 
 A fluent, Laravel-inspired DSL for writing Java-based migrations.  
 Write expressive, readable migrations without raw SQL strings.
