@@ -1,6 +1,6 @@
 # Flyway Migration DSL
 
-A fluent, Laravel-inspired DSL for writing Flyway Java-based migrations.  
+A fluent, Laravel-inspired DSL for writing Java-based migrations.  
 Write expressive, readable migrations without raw SQL strings.
 
 ```java
