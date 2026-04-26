@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>me.jobayeralmahmud.javamigration</groupId>
-    <artifactId>spring-db-migration</artifactId>
+    <artifactId>DatabaseMigrationHelper</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
     
