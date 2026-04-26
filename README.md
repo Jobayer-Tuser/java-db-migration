@@ -4,65 +4,26 @@ A fluent, Laravel-inspired DSL for writing Flyway Java-based migrations.
 Write expressive, readable migrations without raw SQL strings.
 
 ```java
-public class V2__CreateUsersTable extends BaseMigration {
+@Component
+public class S4__CreateProductImagesTable extends BaseMigration {
     @Override
-    protected void run(Schema schema) throws SQLException {
-        schema.create("users", table -> {
-            table.id();
-            table.foreignId("role_id").constrained().onUpdateCascade().onDeleteRestrict();
-            table.string("name");
-            table.string("email").unique();
-            table.string("password");
-            table.datetime("email_verified_at").nullable();
-            table.timestamps();
+    public void up(Schema schema) throws SQLException {
+        schema.create("pos_product_images", table -> {
+            table.uuid();
+            table.foreignUuid("product_id").referencesTable("pos_products").onDeleteCascade();
+            table.string("image_url", 500);
+            table.bool("is_primary").defaultValue(false);
+            table.integer("sort_order");
         });
+
+    }
+
+    @Override
+    public void down(Schema schema) throws SQLException {
+        schema.dropIfExists("pos_product_images");
     }
 }
 ```
-
----
-
-## Installation
-
-### Maven
-```xml
-<dependency>
-    <groupId>io.github.yourusername</groupId>
-    <artifactId>flyway-migration-dsl</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
-
-### Gradle
-```groovy
-implementation 'io.github.yourusername:flyway-migration-dsl:1.0.0'
-```
-
-> **Note:** Flyway itself (`flyway-core`) is a `provided` dependency — your application must include it.
-
----
-
-## Requirements
-
-| Requirement | Version |
-|---|---|
-| Java | 17+ |
-| Spring Boot | 3.x |
-| Flyway | 10.x |
-
----
-
-## Spring Boot Auto-Configuration
-
-The library registers itself automatically via Spring Boot's auto-configuration mechanism.  
-No `@Import` or `@Bean` declarations are needed.
-
-**Optional property** (in `application.properties`):
-```properties
-flyway-dsl.log-sql=true   # Print generated SQL during migrations (default: false)
-```
-
----
 
 ## Usage Guide
 
@@ -72,9 +33,6 @@ All migrations extend `BaseMigration` and implement `run(Schema schema)`:
 
 ```java
 package database.migrations;
-
-import io.github.yourusername.flywaymigrations.library.BaseMigration;
-import io.github.yourusername.flywaymigrations.library.Schema;
 
 public class V1__CreateRolesTable extends BaseMigration {
 
@@ -170,45 +128,6 @@ schema.table("users", table -> {
     table.dropForeign("role_id");       // Drops FK_users_role_id
 });
 ```
-
----
-
-## Publishing to Maven Central
-
-### Prerequisites
-1. [Create a Sonatype Central account](https://central.sonatype.com/)
-2. Verify ownership of your `groupId` namespace (e.g. `io.github.yourusername`)
-3. Set up a GPG key and upload it to a public key server
-
-### One-time Maven settings (`~/.m2/settings.xml`)
-```xml
-<settings>
-  <servers>
-    <server>
-      <id>central</id>
-      <username>YOUR_SONATYPE_TOKEN_USERNAME</username>
-      <password>YOUR_SONATYPE_TOKEN_PASSWORD</password>
-    </server>
-  </servers>
-</settings>
-```
-
-### Release commands
-```bash
-# Build and sign without publishing
-mvn clean verify -Dgpg.passphrase=YOUR_PASSPHRASE
-
-# Deploy to Central (review in portal before release)
-mvn clean deploy -Dgpg.passphrase=YOUR_PASSPHRASE
-
-# Skip signing locally during development
-mvn clean install -Dgpg.skip=true
-```
-
-After deploying, log in to [central.sonatype.com](https://central.sonatype.com) and click **Publish** on the pending deployment.
-
----
-
 ## Project Structure
 
 ```
@@ -219,29 +138,15 @@ src/
     │   │   ├── FlywayMigrationDslAutoConfiguration.java
     │   │   └── FlywayMigrationDslProperties.java
     │   └── library/
+    │       ├── DataType.java
     │       ├── BaseMigration.java
     │       ├── Blueprint.java
+    │       ├── ColumnDefination.java
+    │       ├── ForeignColumnDefination.java
+    │       ├── EnumDefinition.java
+    │       ├── MigrationInitializer.java
+    │       ├── MigrationRunner.java
     │       ├── Schema.java
-    │       └── columns/
-    │           ├── Column.java              (abstract base)
-    │           ├── IntegerLikeColumn.java   (abstract for int types)
-    │           ├── IntegerColumn.java
-    │           ├── BigIntegerColumn.java
-    │           ├── TinyIntColumn.java
-    │           ├── DecimalColumn.java
-    │           ├── NumericColumn.java
-    │           ├── DoubleColumn.java
-    │           ├── StringColumn.java
-    │           ├── TextColumn.java
-    │           ├── DateColumn.java
-    │           ├── DateTimeColumn.java
-    │           ├── TimeStampColumn.java
-    │           ├── EnumColumn.java
-    │           └── ForeignIdColumn.java
     └── resources/META-INF/spring/
         └── org.springframework.boot.autoconfigure.AutoConfiguration.imports
 ```
-
-## License
-
-MIT
